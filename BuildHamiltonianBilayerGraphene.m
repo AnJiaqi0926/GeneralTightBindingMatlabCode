@@ -19,23 +19,27 @@ function [Hamiltonian,neighbor_cell, disp_vec] = BuildHamiltonianBilayerGraphene
         a_lattice = 2.46;
     end
     a_0 = a_lattice/sqrt(3);
-    d_cut = (3 * a_lattice); % 截断长度=3倍石墨烯晶格常数
-    d_cut_min = (0.01 * a_lattice); % 截断长度=3倍石墨烯晶格常数
     d_0 = 3.35;
     r0 = 0.184*a_lattice;
     
 
     % ================== S-K 参数 (GBN) ==================
-    if isfield(params, 'Vpp_pi0')
-        Vpp_pi0 = params.Vpp_pi0;
+    if isfield(params, 't1')
+        t1 = params.t1;
     else
-        Vpp_pi0 = -2.7;
+        t1 = -2.7;
     end
 
-    if isfield(params, 'Vpp_sigma0')
-        Vpp_sigma0 = params.Vpp_sigma0;
+    if isfield(params, 't2')
+        t2 = params.t2;
     else
-        Vpp_sigma0 = 0.48;
+        t2 = 0.48;
+    end
+
+    if isfield(params, 'E_elec')
+        E_elec = params.E_elec;
+    else
+        E_elec = 0.0;
     end
 
     
@@ -90,13 +94,16 @@ function [Hamiltonian,neighbor_cell, disp_vec] = BuildHamiltonianBilayerGraphene
                     R_ij = sqrt(R_sq + Rz^2);
                                         
                     % 跃迁条件：距离在合理范围内或不同层
-                    if R_sq < d_cut && (i ~= j || k ~= 1)
-                        Vpp_pi = Vpp_pi0 * exp(-(R_ij - a_0)/r0);
-                        Vpp_sigma = Vpp_sigma0 * exp(-(R_ij - d_0)/r0);
-                        
-                        % 计算Slater-Koster跃迁积分
-                        t_val = Vpp_pi * (1 - (abs(Rz)/R_ij)^2) + Vpp_sigma * ((abs(Rz)/R_ij)^2);
-                        H_slice(i, j) = H_slice(i, j) + t_val;
+                    if layer(i) == layer(j) && R_ij > 0.9*a_0 && R_ij < 1.1*a_0
+                        H_slice(i, j) = H_slice(i, j) + t1;
+                    elseif layer(i) ~= layer(j) && R_sq < 0.1
+                        H_slice(i, j) = H_slice(i, j) + t2;
+                    elseif i == j && k == 1 
+                        if layer(i) == 1
+                            H_slice(i, j) = H_slice(i, j) + E_elec;
+                        elseif layer(i) == 2
+                            H_slice(i, j) = H_slice(i, j) - E_elec;
+                        end
                     end
                 end
             end
@@ -122,14 +129,16 @@ function [Hamiltonian,neighbor_cell, disp_vec] = BuildHamiltonianBilayerGraphene
                     R_ij = sqrt(R_sq + Rz^2);
                     
                     % 跃迁条件：距离在合理范围内或不同层
-                    if R_sq < d_cut && R_sq > d_cut_min && (i ~= j || k ~= 1)
-                        % 区分层内和层间跃迁
-                        Vpp_pi = Vpp_pi0 * exp(-(R_ij - a_0)/r0);
-                        Vpp_sigma = Vpp_sigma0 * exp(-(R_ij - d_0)/r0);
-                        
-                        % 计算Slater-Koster跃迁积分
-                        t_val = Vpp_pi * (1 - (abs(Rz)/R_ij)^2) + Vpp_sigma * ((abs(Rz)/R_ij)^2);
-                        Hamiltonian(i, j, k) = Hamiltonian(i, j, k) + t_val;
+                    if layer(i) == layer(j) && R_ij > 0.9*a_0 && R_ij < 1.1*a_0
+                        Hamiltonian(i, j, k) = Hamiltonian(i, j, k) + t1;
+                    elseif layer(i) ~= layer(j) && R_sq < 0.1
+                        Hamiltonian(i, j, k) = Hamiltonian(i, j, k) + t2;
+                    elseif i == j && k == 1 
+                        if layer(i) == 1
+                            Hamiltonian(i, j, k) = Hamiltonian(i, j, k) + E_elec;
+                        elseif layer(i) == 2
+                            Hamiltonian(i, j, k) = Hamiltonian(i, j, k) - E_elec;
+                        end
                     end
                 end
             end

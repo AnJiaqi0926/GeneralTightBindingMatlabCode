@@ -56,18 +56,18 @@ function [a1, a2, atom_position] = Structure_zigzagBilayerGraphene(Nx, Ny, plot_
     posD = [a/2,5*a/(2*sqrt(3))];
     if strcmp(StackedMode, "AA")
         posE = [a/2,a/(2*sqrt(3))];
-        posF = [a,a/sqrt(3)];
-        posG = [a,2*a/sqrt(3)];
+        posF = [a,  a/sqrt(3)];
+        posG = [a,  2*a/sqrt(3)];
         posH = [a/2,5*a/(2*sqrt(3))];
     elseif strcmp(StackedMode, "AB")
         posE = [a/2,a/(2*sqrt(3))+a/sqrt(3)];
-        posF = [a,a/sqrt(3)+a/sqrt(3)];
-        posG = [a,2*a/sqrt(3)+a/sqrt(3)];
+        posF = [a,  a/sqrt(3)+a/sqrt(3)];
+        posG = [a,  2*a/sqrt(3)+a/sqrt(3)];
         posH = [a/2,5*a/(2*sqrt(3))+a/sqrt(3)];
     elseif strcmp(StackedMode, "BA")
         posE = [a/2,a/(2*sqrt(3))+2*a/sqrt(3)];
-        posF = [a,a/sqrt(3)+2*a/sqrt(3)];
-        posG = [a,2*a/sqrt(3)-a/sqrt(3)];
+        posF = [a,  a/sqrt(3)+2*a/sqrt(3)];
+        posG = [a,  2*a/sqrt(3)-a/sqrt(3)];
         posH = [a/2,5*a/(2*sqrt(3))-a/sqrt(3)];
     end
     
@@ -143,8 +143,8 @@ function [a1, a2, atom_position] = Structure_zigzagBilayerGraphene(Nx, Ny, plot_
             atom_position(atom_count, :) = [...
                 displacement(1) + posE(1), ... % x坐标
                 displacement(2) + posE(2), ... % y坐标
-                0, ...                         % z坐标 (二维材料设为0)
-                1, ...                         % 层数 (单层设为1)
+                3.35, ...                         % z坐标 (二维材料设为0)
+                2, ...                         % 层数 (单层设为1)
                 1, ...                         % 子晶格 (A=1)
                 1, ...                         % 原子类型 (碳=1)
                 1, ...                         % 自旋类型 (1，-1)
@@ -155,8 +155,8 @@ function [a1, a2, atom_position] = Structure_zigzagBilayerGraphene(Nx, Ny, plot_
             atom_position(atom_count, :) = [...
                 displacement(1) + posF(1), ... % x坐标
                 displacement(2) + posF(2), ... % y坐标
-                0, ...                         % z坐标
-                1, ...                         % 层数
+                3.35, ...                         % z坐标 (二维材料设为0)
+                2, ...                         % 层数 (单层设为1)
                 2, ...                         % 子晶格 (B=2)
                 1, ...                         % 原子类型
                 1, ...                         % 自旋类型 (1，-1)
@@ -167,8 +167,8 @@ function [a1, a2, atom_position] = Structure_zigzagBilayerGraphene(Nx, Ny, plot_
             atom_position(atom_count, :) = [...
                 displacement(1) + posG(1), ... % x坐标
                 displacement(2) + posG(2), ... % y坐标
-                0, ...                         % z坐标 (二维材料设为0)
-                1, ...                         % 层数 (单层设为1)
+                3.35, ...                         % z坐标 (二维材料设为0)
+                2, ...                         % 层数 (单层设为1)
                 1, ...                         % 子晶格 (A=1)
                 1, ...                         % 原子类型 (碳=1)
                 1, ...                         % 自旋类型 (1，-1)
@@ -178,9 +178,9 @@ function [a1, a2, atom_position] = Structure_zigzagBilayerGraphene(Nx, Ny, plot_
             atom_count = atom_count + 1;
             atom_position(atom_count, :) = [...
                 displacement(1) + posH(1), ... % x坐标
-                displacement(2) + posD(2), ... % y坐标
-                0, ...                         % z坐标
-                1, ...                         % 层数
+                displacement(2) + posH(2), ... % y坐标
+                3.35, ...                         % z坐标 (二维材料设为0)
+                2, ...                         % 层数 (单层设为1)
                 2, ...                         % 子晶格 (B=2)
                 1, ...                         % 原子类型
                 1, ...                         % 自旋类型 (1，-1)
@@ -240,8 +240,8 @@ function [a1, a2, atom_position] = Structure_zigzagBilayerGraphene(Nx, Ny, plot_
                 atom_position(atom_count, :) = [...
                     displacement(1) + posE(1), ... % x坐标
                     displacement(2) + posE(2), ... % y坐标
-                    0, ...                         % z坐标 (二维材料设为0)
-                    1, ...                         % 层数 (单层设为1)
+                    3.35, ...                         % z坐标 (二维材料设为0)
+                    2, ...                         % 层数 (单层设为1)
                     1, ...                         % 子晶格 (A=1)
                     1, ...                         % 原子类型 (碳=1)
                     -1, ...                         % 自旋类型 (1，-1)
@@ -252,8 +252,8 @@ function [a1, a2, atom_position] = Structure_zigzagBilayerGraphene(Nx, Ny, plot_
                 atom_position(atom_count, :) = [...
                     displacement(1) + posF(1), ... % x坐标
                     displacement(2) + posF(2), ... % y坐标
-                    0, ...                         % z坐标
-                    1, ...                         % 层数
+                    3.35, ...                         % z坐标 (二维材料设为0)
+                    2, ...                         % 层数 (单层设为1)
                     2, ...                         % 子晶格 (B=2)
                     1, ...                         % 原子类型
                     -1, ...                         % 自旋类型 (1，-1)
@@ -264,8 +264,8 @@ function [a1, a2, atom_position] = Structure_zigzagBilayerGraphene(Nx, Ny, plot_
                 atom_position(atom_count, :) = [...
                     displacement(1) + posG(1), ... % x坐标
                     displacement(2) + posG(2), ... % y坐标
-                    0, ...                         % z坐标 (二维材料设为0)
-                    1, ...                         % 层数 (单层设为1)
+                    3.35, ...                         % z坐标 (二维材料设为0)
+                    2, ...                         % 层数 (单层设为1)
                     1, ...                         % 子晶格 (A=1)
                     1, ...                         % 原子类型 (碳=1)
                     -1, ...                         % 自旋类型 (1，-1)
@@ -276,8 +276,8 @@ function [a1, a2, atom_position] = Structure_zigzagBilayerGraphene(Nx, Ny, plot_
                 atom_position(atom_count, :) = [...
                     displacement(1) + posH(1), ... % x坐标
                     displacement(2) + posH(2), ... % y坐标
-                    0, ...                         % z坐标
-                    1, ...                         % 层数
+                    3.35, ...                         % z坐标 (二维材料设为0)
+                    2, ...                         % 层数 (单层设为1)
                     2, ...                         % 子晶格 (B=2)
                     1, ...                         % 原子类型
                     -1, ...                         % 自旋类型 (1，-1)

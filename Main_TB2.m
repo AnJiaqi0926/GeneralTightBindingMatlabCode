@@ -50,14 +50,14 @@ calc_Hamiltonian = 'Bilayer_Graphene'; % 计算Hamiltonian的方式
 calc_mode = 'high_sym';  % 'full' - 全布里渊区能带, 'high_sym' - 沿高对称线能带
 
 calc_ribbon = true; % 是否计算条带结构
-calc_chern = true; % 是否计算陈数
-calc_DOS = true; % 是否计算态密度
+calc_chern = false; % 是否计算陈数
+calc_DOS = false; % 是否计算态密度
 
 % ------------------------ 原胞构建参数 ----------------------
 Nx = 1;  % 沿a1方向的超胞重复次数
 Ny = 1;  % 沿a2方向的超胞重复次数
 Nx_ribbon = 1; %沿a1方向的ribbon超胞重复次数
-Ny_ribbon = 100; % 沿a2方向的ribbon超胞重复次数
+Ny_ribbon = 200; % 沿a2方向的ribbon超胞重复次数
 
 plot_structure = true;  % 是否绘制原子结构图
 
@@ -94,10 +94,10 @@ hamiltonian_params = GetHamiltonianParams(calc_Hamiltonian);
 % ------------------------- 态密度计算参数 -------------------------
 delta_v = 1*1e-2; % 态密度使用的delta函数展宽
 d = 1;  % 布里渊区面积
-numInterpPoints = 2000; % 插值法绘制3D能带
+numInterpPoints = 2001; % 插值法绘制3D能带
 
 % ------------------------- 其他通用参数 -------------------------
-nsum = 100;  % 绘制能带的k点数量 (全布里渊区模式为nsum×nsum个点，高对称线模式为nsum个点)
+nsum = 1001;  % 绘制能带的k点数量 (全布里渊区模式为nsum×nsum个点，高对称线模式为nsum个点)
 
 custom_path = [0, 0;       % Γ点
                0, 1/2;     % M点  
@@ -681,6 +681,6 @@ function params = GetHamiltonianParams(calc_Hamiltonian)
         case 'Bilayer_Graphene'
             params.t1 = -2.7;
             params.t2 = 0.48;
-            params.E_elec = 0.0;
+            params.E_elec = 0.1;
     end
 end
