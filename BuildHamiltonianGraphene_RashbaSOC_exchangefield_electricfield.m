@@ -1,4 +1,4 @@
-function [Hamiltonian, neighbor_cell, disp_vec] = BuildHamiltonianGraphene_RashbaSOC_exchangefield_electricfield(a1, a2, atom_position, N, neighbor_cell)
+function [Hamiltonian, neighbor_cell, disp_vec] = BuildHamiltonianGraphene_RashbaSOC_exchangefield_electricfield(a1, a2, atom_position, N, neighbor_cell, params)
     % 构建紧束缚模型哈密顿量函数
     %
     % 输入参数:
@@ -13,15 +13,43 @@ function [Hamiltonian, neighbor_cell, disp_vec] = BuildHamiltonianGraphene_Rashb
     %   disp_vec - 位移矢量
     
     % ================== 参数设置 ==================
-    a_lattice = 2.46;  % 石墨烯晶格常数 (Å)
+    if isfield(params, 'a')
+        a_lattice = params.a;
+    else
+        a_lattice = 2.46;
+    end
     a_0 = a_lattice/sqrt(3);
     
-    % ================== S-K 参数 (GBN) ==================
-    t1 = -2.7;
-    t2 = 0.48;
-    E_elec = 0.0;
-    tSO = 0.18;
-    lam = 0.2;
+    % ================== Rashba SOC + Exchange field参数 ==================
+    if isfield(params, 't1')
+        t1 = params.t1;
+    else
+        t1 = -2.7;
+    end
+
+    if isfield(params, 't2')
+        t2 = params.t2;
+    else
+        t2 = 0.48;
+    end
+
+    if isfield(params, 'E_elec')
+        E_elec = params.E_elec;
+    else
+        E_elec = -2.7;
+    end
+
+    if isfield(params, 'tSO')
+        tSO = params.tSO;
+    else
+        tSO = -2.7;
+    end
+
+    if isfield(params, 'lam')
+        lam = params.lam;
+    else
+        lam = -2.7;
+    end
 
     % ================== 近邻原胞定义 ==================
     % 定义9个最近邻原胞 (包括原胞自身)
