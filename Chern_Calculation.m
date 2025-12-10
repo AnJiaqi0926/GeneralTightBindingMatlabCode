@@ -1,4 +1,4 @@
-function [Omega,Chern_number,Chern_number_v1,Chern_number_v2,Ene_v] = Chern_Calculation(band,Ham_Init,disp_vec,Nk,Hsize,kx_v,ky_v,dkx,dky,b1,b2)
+function [Omega,Chern_number,Chern_number_v1,Chern_number_v2,Ene_v] = Chern_Calculation(band,Ham_Init,disp_vec,Nk,Hsize,kx_v,ky_v,dkx,dky,b1,b2,calc_Structure,calc_Hamiltonian)
 
 N_neighbor = size(disp_vec, 1);  % 近邻原胞数量
 Ene_v = zeros(Nk,Nk,Hsize);
@@ -94,12 +94,13 @@ end
 Chern_number=sum(Chern,'all');
 Chern_number_v1=sum(Chern_v1,'all');
 Chern_number_v2=sum(Chern_v2,'all');
-Name = 'Chern_'+string(datestr(now,'mm_dd_HHMM'))+'.mat';
+Name = "Chern_"+calc_Structure+"_"+calc_Hamiltonian+".mat";
 save(Name,"Chern")
-Name = 'Chernv1_'+string(datestr(now,'mm_dd_HHMM'))+'.mat';
+Name = "Chern_v1_"+calc_Structure+"_"+calc_Hamiltonian+".mat";
 save(Name,"Chern_v1")
-Name = 'Chernv2_'+string(datestr(now,'mm_dd_HHMM'))+'.mat';
+Name = "Chern_v2_"+calc_Structure+"_"+calc_Hamiltonian+".mat";
 save(Name,"Chern_v2")
 close(bar)                % 循环结束可以关闭进度条，个人一般留着不关闭
 toc;                      % tic;与toc;配合使用能够返回程序运行时间
+
 end
